@@ -1,0 +1,72 @@
+<script type="text/javascript">
+  RED.nodes.registerType("node-red-contrib-cip", {
+    category: "network",
+    color: "#a6bbcf",
+    inputs: 1,
+    outputs: 2,
+    icon: "bridge.svg",
+    defaults: {
+      host: { required: true },
+      ipid: {
+        value: "04",
+        required: true,
+        help: "HEX value as presented in Crestron IPID",
+      },
+      port: { value: 41794, required: true },
+      name: { value: "Crestron" },
+      debug: {
+        value: false,
+        help: "Enable CIP packet debug, you must run nodered with `DEBUG=CIP* node-red`",
+      },
+      reconnect: {
+        value: true,
+        help: "Enable the reoconnection if socket closes",
+      },
+      timeout: { value: 10000, help: "Retry to reconnect after this timeout" },
+    },
+    label: function () {
+      return (
+        this.name +
+        " " +
+        (this.host ? this.host + " IPID " + this.ipid : "MISSING HOST")
+      );
+    },
+  });
+</script>
+
+<script type="text/x-red" data-template-name="node-red-contrib-cip">
+  <div class="form-row">
+      <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+      <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-host"><i class="icon-globe"></i> Host</label>
+      <input type="text" id="node-input-host">
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-port"><i class="icon-screenshot"></i> Port</label>
+      <input type="text" id="node-input-port">
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-ipid"><i class="icon-cog"></i> IP ID</label>
+      <input type="text" id="node-input-ipid">
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-reconnect"><i class="icon-retweet"></i> Reconnect</label>
+      <input type="checkbox" id="node-input-reconnect" value="1">
+      <span>Reconnect socket when connection closes</span>
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-timeout"><i class="icon-time"></i> Timeout</label>
+      <input type="number" id="node-input-timeout"> Connection timeout
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="node-red-contrib-cip">
+  <p>A simple node that connects to Crestron processors through CIP protocol</p>
+</script>

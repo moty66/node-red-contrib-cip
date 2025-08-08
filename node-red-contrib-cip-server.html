@@ -1,0 +1,139 @@
+<script type="text/javascript">
+  RED.nodes.registerType("node-red-contrib-cip-server", {
+    category: "network",
+    color: "#c7a6bf",
+    inputs: 1,
+    outputs: 2,
+    icon: "bridge.svg",
+    defaults: {
+      ipid: {
+        value: "04",
+        required: true,
+        help: "HEX value as presented in Crestron IPID",
+      },
+      port: { value: 41794, required: true },
+      name: { value: "Crestron Server" },
+      debug: {
+        value: false,
+        help: "Enable CIP packet debug, you must run nodered with `DEBUG=CIP* node-red`",
+      },
+      timeout: { value: 10000, help: "Connection timeout in milliseconds" },
+    },
+    label: function () {
+      return (
+        this.name +
+        " " +
+        (this.port
+          ? "Port " + this.port + " IPID " + this.ipid
+          : "MISSING PORT")
+      );
+    },
+  });
+</script>
+
+<script type="text/x-red" data-template-name="node-red-contrib-cip-server">
+  <div class="form-row">
+      <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+      <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-port"><i class="icon-screenshot"></i> Port</label>
+      <input type="text" id="node-input-port">
+      <span>Server listening port</span>
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-ipid"><i class="icon-cog"></i> IP ID</label>
+      <input type="text" id="node-input-ipid">
+      <span>Server IPID in hex format</span>
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-timeout"><i class="icon-time"></i> Timeout</label>
+      <input type="number" id="node-input-timeout"> Connection timeout
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-debug"><i class="icon-bug"></i> Debug</label>
+      <input type="checkbox" id="node-input-debug" value="1">
+      <span>Enable CIP packet debugging</span>
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="node-red-contrib-cip-server">
+    <p>A CIP server node that allows Crestron processors to connect as clients to Node-RED</p>
+
+    <h3>Details</h3>
+    <p>This node creates a CIP server that listens for incoming connections from Crestron processors.
+    Unlike the client node, this allows Node-RED to act as the server in the CIP communication.</p>
+
+    <h3>Configuration</h3>
+    <ul>
+      <li><strong>Name</strong>: Display name for the node</li>
+      <li><strong>Port</strong>: TCP port to listen on (default: 41794)</li>
+      <li><strong>IP ID</strong>: Hexadecimal IPID value for the server</li>
+      <li><strong>Timeout</strong>: Connection timeout in milliseconds</li>
+      <li><strong>Debug</strong>: Enable packet-level debugging</li>
+    </ul>
+
+    <h3>Inputs</h3>
+    <p>Send messages to control the connected Crestron client:</p>
+
+    <h4>Digital Output</h4>
+    <pre>msg.payload = {
+    type: "event",
+    payload: {
+      type: "digital",
+      join: 1,
+      data: true
+    }
+  };</pre>
+
+    <h4>Analog Output</h4>
+    <pre>msg.payload = {
+    type: "event",
+    payload: {
+      type: "analog",
+      join: 1,
+      data: 32768
+    }
+  };</pre>
+
+    <h4>Serial Output</h4>
+    <pre>msg.payload = {
+    type: "event",
+    payload: {
+      type: "serial",
+      join: 1,
+      data: "Hello World"
+    }
+  };</pre>
+
+    <h4>Pulse Output</h4>
+    <pre>msg.payload = {
+    type: "event",
+    payload: {
+      type: "pulse",
+      join: 1,
+      time: 100
+    }
+  };</pre>
+
+    <h4>Sync Request</h4>
+    <pre>msg.payload = {
+    type: "sync"
+  };</pre>
+
+    <h3>Outputs</h3>
+    <p><strong>Output 1:</strong> Join events received from connected Crestron client</p>
+    <p><strong>Output 2:</strong> Connection status and system events</p>
+
+    <h3>Status</h3>
+    <ul>
+      <li><strong>Listening on port X</strong>: Server is waiting for client connections</li>
+      <li><strong>Client connected</strong>: A Crestron client has connected</li>
+      <li><strong>Server error</strong>: An error occurred</li>
+      <li><strong>Stopped</strong>: Server has been stopped</li>
+    </ul>
+</script>

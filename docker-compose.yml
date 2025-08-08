@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  node-red:
+    build: .
+    ports:
+      - "1880:1880"
+      - "41794:41794" # CIP protocol port
+    volumes:
+      # Mount the current directory as the plugin source
+      - ./:/plugin:ro
+      # Persistent Node-RED data
+      - node-red-data:/data
+    environment:
+      # Enable debug logging for CIP protocol
+      - DEBUG=CIP*
+      - NODE_RED_ENABLE_PROJECTS=false
+    restart: unless-stopped
+    container_name: node-red-cip-dev
+
+volumes:
+  node-red-data:

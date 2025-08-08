@@ -1,0 +1,1 @@
+{"version":3,"file":"cip-options.d.ts","sourceRoot":"","sources":["../../src/interfaces/cip-options.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,UAAU;IAEzB,IAAI,EAAE,MAAM,CAAC;IAGb,IAAI,EAAE,MAAM,CAAC;IAGb,IAAI,EAAE,MAAM,CAAC;IAGb,KAAK,CAAC,EAAE,OAAO,CAAC;IAGhB,SAAS,CAAC,EAAE,OAAO,CAAC;IAGpB,OAAO,CAAC,EAAE,MAAM,CAAC;IAGjB,IAAI,CAAC,EAAE,QAAQ,GAAG,QAAQ,CAAC;CAC5B"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"cip-event-data.interface.d.ts","sourceRoot":"","sources":["../../src/interfaces/cip-event-data.interface.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,YAAY;IAE3B,IAAI,EAAE,MAAM,CAAC;IAGb,IAAI,EAAE,MAAM,GAAG,OAAO,GAAG,MAAM,GAAG,MAAM,CAAC;IAGzC,IAAI,EAAE,SAAS,GAAG,QAAQ,GAAG,QAAQ,GAAG,SAAS,CAAC;CACnD"}

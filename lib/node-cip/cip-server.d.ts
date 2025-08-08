@@ -1,0 +1,40 @@
+import { CIPOptions } from ".";
+import { EventEmitter } from "events";
+declare class CIPServer extends EventEmitter {
+    private server;
+    private socket;
+    private timer;
+    private buffer;
+    private options?;
+    private pingsSent;
+    constructor(options?: CIPOptions);
+    private serverStart;
+    private onConnect;
+    private onError;
+    private onClose;
+    private onData;
+    connect(options?: CIPOptions): boolean;
+    disconnect(): void;
+    sendDigital(join: number, value: boolean): boolean;
+    sendAnalog(join: number, value: number): boolean;
+    sendSerial(join: number, value: string): boolean;
+    sendUpdateRequest(): boolean;
+    private write;
+    private append;
+    private sendPing;
+    private sendPong;
+    private sendWhois;
+    private sendAcceptConnection;
+    private sendIPID;
+    private processBuffer;
+    private processPayload;
+    private parseEvent;
+    private parseTimeSync;
+    private parseUpdateResponse;
+    private parseSerialInput;
+    private parseSerialUnicodeInput;
+    private parseAnalogInput;
+    private parseDigitalInput;
+}
+export default CIPServer;
+//# sourceMappingURL=cip-server.d.ts.map

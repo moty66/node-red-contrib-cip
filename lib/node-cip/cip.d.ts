@@ -1,0 +1,36 @@
+import { CIPOptions } from ".";
+import { EventEmitter } from "events";
+declare class CIP extends EventEmitter {
+    private client;
+    private timer;
+    private buffer;
+    private options?;
+    private pingsSent;
+    constructor(options?: CIPOptions);
+    private onConnect;
+    private onError;
+    private onClose;
+    private onData;
+    connect(options?: CIPOptions): boolean;
+    disconnect(): void;
+    sendUpdateRequest(): boolean;
+    write(buffer: Buffer): boolean;
+    sendDigital(join: number, value: boolean): boolean;
+    sendAnalog(join: number, value: number): boolean;
+    sendSerial(join: number, value: string): boolean;
+    private append;
+    private sendPing;
+    private sendPong;
+    private sendIPID;
+    private processBuffer;
+    private processPayload;
+    private parseEvent;
+    private parseTimeSync;
+    private parseUpdateResponse;
+    private parseSerialInput;
+    private parseSerialUnicodeInput;
+    private parseAnalogInput;
+    private parseDigitalInput;
+}
+export default CIP;
+//# sourceMappingURL=cip.d.ts.map

@@ -1,0 +1,48 @@
+{
+  "name": "node-red-contrib-cip",
+  "version": "1.1.1",
+  "description": "Connects node-red with Crestron processors though CIP protocol",
+  "keywords": [
+    "node-red",
+    "crestron",
+    "cip",
+    "automation",
+    "home-automation",
+    "av",
+    "control-system"
+  ],
+  "main": "node-red-contrib-cip.js",
+  "files": [
+    "node-red-contrib-cip.js",
+    "node-red-contrib-cip.html",
+    "node-red-contrib-cip-server.js",
+    "node-red-contrib-cip-server.html",
+    "lib/",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "echo \"Ready to publish node-red-contrib-cip\"",
+    "postinstall": "echo \"Successfully installed node-red-contrib-cip. Restart Node-RED to use the new node.\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moty66/node-red-contrib-cip.git"
+  },
+  "node-red": {
+    "nodes": {
+      "node-red-contrib-cip": "node-red-contrib-cip.js",
+      "node-red-contrib-cip-server": "node-red-contrib-cip-server.js"
+    }
+  },
+  "author": "Motaz Abutihab",
+  "license": "ISC",
+  "homepage": "https://github.com/moty66/node-red-contrib-cip#readme",
+  "dependencies": {
+    "debug": "^4.4.1"
+  }
+}
