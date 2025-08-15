@@ -7,6 +7,12 @@ declare class CIPServer extends EventEmitter {
     private buffer;
     private options?;
     private pingsSent;
+    private smartObjectTracker;
+    private boundOnError;
+    private boundOnConnect;
+    private boundOnClose;
+    private boundOnData;
+    private boundDisconnect;
     constructor(options?: CIPOptions);
     private serverStart;
     private onConnect;
@@ -18,6 +24,9 @@ declare class CIPServer extends EventEmitter {
     sendDigital(join: number, value: boolean): boolean;
     sendAnalog(join: number, value: number): boolean;
     sendSerial(join: number, value: string): boolean;
+    sendSmartObjectDigital(smartObjectId: number, join: number, value: boolean): boolean;
+    sendSmartObjectAnalog(smartObjectId: number, join: number, value: number): boolean;
+    sendSmartObjectSerial(smartObjectId: number, join: number, value: string): boolean;
     sendUpdateRequest(): boolean;
     private write;
     private append;
@@ -29,12 +38,27 @@ declare class CIPServer extends EventEmitter {
     private processBuffer;
     private processPayload;
     private parseEvent;
+    private parseUnicodeMessage;
     private parseTimeSync;
     private parseUpdateResponse;
     private parseSerialInput;
     private parseSerialUnicodeInput;
     private parseAnalogInput;
     private parseDigitalInput;
+    registerSmartObject(smartObjectId: number, profile: "dynamicList" | "pageReference" | "buttonList" | "keypad", config?: any): void;
+    getSmartObjectCurrentPage(smartObjectId: number): number | undefined;
+    getRegisteredSmartObjects(): number[];
+    dynamicListSetItemCount(smartObjectId: number, itemCount: number): boolean;
+    dynamicListSetItemText(smartObjectId: number, itemIndex: number, text: string): boolean;
+    dynamicListSetItemEnabled(smartObjectId: number, itemIndex: number, enabled: boolean): boolean;
+    pageReferenceSelectPage(smartObjectId: number, pageNumber: number): boolean;
+    pageReferenceSetButtonEnabled(smartObjectId: number, buttonNumber: number, enabled: boolean): boolean;
+    buttonListSetText(smartObjectId: number, buttonIndex: number, text: string): boolean;
+    buttonListSetEnabled(smartObjectId: number, buttonIndex: number, enabled: boolean): boolean;
+    keypadSendKey(smartObjectId: number, keyValue: string): boolean;
+    keypadSetDisplay(smartObjectId: number, displayText: string): boolean;
+    keypadSetEnabled(smartObjectId: number, enabled: boolean): boolean;
+    parseSmartObject(payload: Buffer): void;
 }
 export default CIPServer;
 //# sourceMappingURL=cip-server.d.ts.map

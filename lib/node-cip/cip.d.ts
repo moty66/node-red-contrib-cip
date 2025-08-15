@@ -6,6 +6,11 @@ declare class CIP extends EventEmitter {
     private buffer;
     private options?;
     private pingsSent;
+    private boundOnError;
+    private boundOnConnect;
+    private boundOnClose;
+    private boundOnData;
+    private boundDisconnect;
     constructor(options?: CIPOptions);
     private onConnect;
     private onError;
@@ -18,6 +23,9 @@ declare class CIP extends EventEmitter {
     sendDigital(join: number, value: boolean): boolean;
     sendAnalog(join: number, value: number): boolean;
     sendSerial(join: number, value: string): boolean;
+    sendSmartObjectDigital(smartObjectId: number, join: number, value: boolean): boolean;
+    sendSmartObjectAnalog(smartObjectId: number, join: number, value: number): boolean;
+    sendSmartObjectSerial(smartObjectId: number, join: number, value: string): boolean;
     private append;
     private sendPing;
     private sendPong;
@@ -25,6 +33,7 @@ declare class CIP extends EventEmitter {
     private processBuffer;
     private processPayload;
     private parseEvent;
+    private parseUnicodeMessage;
     private parseTimeSync;
     private parseUpdateResponse;
     private parseSerialInput;
