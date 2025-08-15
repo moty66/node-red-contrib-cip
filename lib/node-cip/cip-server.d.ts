@@ -7,6 +7,7 @@ declare class CIPServer extends EventEmitter {
     private buffer;
     private options?;
     private pingsSent;
+    private isConnected;
     private smartObjectTracker;
     private boundOnError;
     private boundOnConnect;
@@ -21,6 +22,7 @@ declare class CIPServer extends EventEmitter {
     private onData;
     connect(options?: CIPOptions): boolean;
     disconnect(): void;
+    isServerConnected(): boolean;
     sendDigital(join: number, value: boolean): boolean;
     sendAnalog(join: number, value: number): boolean;
     sendSerial(join: number, value: string): boolean;
