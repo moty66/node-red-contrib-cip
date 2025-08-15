@@ -31,6 +31,7 @@ declare class CIPServer extends EventEmitter {
     sendSmartObjectSerial(smartObjectId: number, join: number, value: string): boolean;
     sendUpdateRequest(): boolean;
     private write;
+    private writeRaw;
     private append;
     private sendPing;
     private sendPong;
