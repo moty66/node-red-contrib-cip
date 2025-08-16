@@ -1,0 +1,196 @@
+[
+  {
+    "id": "0197582dd30bd76a",
+    "type": "node-red-contrib-cip-server",
+    "z": "94636f4751872522",
+    "ipid": "0x03",
+    "port": 41794,
+    "name": "Node-Red-Cip-Server",
+    "debug": false,
+    "timeout": 10000,
+    "x": 390,
+    "y": 140,
+    "wires": [
+      [
+        "b67a210f450d99a6",
+        "80fd323e2a6da540"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "b67a210f450d99a6",
+    "type": "switch",
+    "z": "94636f4751872522",
+    "name": "",
+    "property": "payload.type",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "digital",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "analog",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "serial",
+        "vt": "str"
+      }
+    ],
+    "checkall": "false",
+    "repair": false,
+    "outputs": 3,
+    "x": 490,
+    "y": 260,
+    "wires": [
+      [
+        "06b8fbba4cf084a1"
+      ],
+      [],
+      []
+    ]
+  },
+  {
+    "id": "06b8fbba4cf084a1",
+    "type": "switch",
+    "z": "94636f4751872522",
+    "name": "Digital joins",
+    "property": "payload.join",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "10",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "11",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "12",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 3,
+    "x": 710,
+    "y": 260,
+    "wires": [
+      [
+        "85828a0368d3ec78"
+      ],
+      [
+        "5c0fa7b5627b54cc"
+      ],
+      [
+        "4fe263180efb0d7a"
+      ]
+    ]
+  },
+  {
+    "id": "85828a0368d3ec78",
+    "type": "change",
+    "z": "94636f4751872522",
+    "name": "Welcome back",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "true",
+        "tot": "bool"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 920,
+    "y": 220,
+    "wires": [
+      [
+        "f59785f9416403b3"
+      ]
+    ]
+  },
+  {
+    "id": "5c0fa7b5627b54cc",
+    "type": "change",
+    "z": "94636f4751872522",
+    "name": "Out of home",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "false",
+        "tot": "bool"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 910,
+    "y": 260,
+    "wires": [
+      [
+        "d84e605ce31235b8"
+      ]
+    ]
+  },
+  {
+    "id": "4fe263180efb0d7a",
+    "type": "change",
+    "z": "94636f4751872522",
+    "name": "Out of home",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "32000",
+        "tot": "num"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 910,
+    "y": 300,
+    "wires": [
+      [
+        "a40b6a19025e675e"
+      ]
+    ]
+  },
+  {
+    "id": "80fd323e2a6da540",
+    "type": "debug",
+    "z": "94636f4751872522",
+    "name": "debug 4",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 780,
+    "y": 140,
+    "wires": []
+  }
+]

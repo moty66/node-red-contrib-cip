@@ -21,12 +21,14 @@ Professional Node-RED nodes for seamless integration with **Crestron control sys
 - **Digital Joins**: Boolean control (lights, relays, switches)
 - **Analog Joins**: Numeric control (volume, dimming, position: 0-65535)
 - **Serial Joins**: String communication (text, commands, feedback)
+- **Smart Objects**: Advanced UI controls with intelligent state management
 - **Pulse Commands**: Momentary button presses with configurable timing
 - **Real-time Feedback**: Instant status updates from Crestron systems
 
 ### 🚀 **Enterprise Features**
 
 - **Automatic Reconnection**: Robust connection management with configurable timeouts
+- **Smart Object Support**: Advanced UI controls with dynamic lists, keypads, and button arrays
 - **Heartbeat Monitoring**: Built-in ping/pong mechanism for connection health
 - **Packet-level Debugging**: Comprehensive logging for troubleshooting
 - **State Synchronization**: Full system state retrieval on connection
@@ -184,6 +186,255 @@ msg.payload = {
 };
 ```
 
+## 🎛️ Smart Objects
+
+Smart Objects provide advanced UI control capabilities beyond basic joins, allowing for complex interface elements like dynamic lists, button arrays, and interactive controls. **Smart Objects are available with the CIP Server node.**
+
+### Supported Smart Object Types
+
+#### 📋 **Dynamic List**
+
+Interactive lists with programmable content and selection handling.
+
+```javascript
+// Register a dynamic list
+msg.payload = {
+  type: "registerSmartObject",
+  payload: {
+    smartObjectId: 101,
+    profile: "dynamicList",
+    config: {
+      maxItems: 20,
+      allowMultipleSelection: false,
+    },
+  },
+};
+
+// Set list item count
+msg.payload = {
+  type: "smartObject",
+  payload: {
+    smartObjectId: 101,
+    action: "setItemCount",
+    itemCount: 5,
+  },
+};
+
+// Set list item text
+msg.payload = {
+  type: "smartObject",
+  payload: {
+    smartObjectId: 101,
+    action: "setItemText",
+    itemIndex: 1,
+    text: "Living Room",
+  },
+};
+
+// Enable/disable list item
+msg.payload = {
+  type: "smartObject",
+  payload: {
+    smartObjectId: 101,
+    action: "setItemEnabled",
+    itemIndex: 1,
+    enabled: true,
+  },
+};
+```
+
+#### 📄 **Page Reference**
+
+Multi-page navigation controls with page switching and button management.
+
+```javascript
+// Register a page reference
+msg.payload = {
+  type: "registerSmartObject",
+  payload: {
+    smartObjectId: 102,
+    profile: "pageReference",
+    config: {
+      totalPages: 5,
+      showNavButtons: true,
+    },
+  },
+};
+
+// Select a page
+msg.payload = {
+  type: "smartObject",
+  payload: {
+    smartObjectId: 102,
+    action: "selectPage",
+    pageNumber: 3,
+  },
+};
+
+// Enable/disable navigation button
+msg.payload = {
+  type: "smartObject",
+  payload: {
+    smartObjectId: 102,
+    action: "setButtonEnabled",
+    buttonNumber: 1,
+    enabled: false,
+  },
+};
+```
+
+#### 🔘 **Button List**
+
+Arrays of programmable buttons with individual text and state control.
+
+```javascript
+// Register a button list
+msg.payload = {
+  type: "registerSmartObject",
+  payload: {
+    smartObjectId: 103,
+    profile: "buttonList",
+    config: {
+      buttonCount: 8,
+      allowToggle: true,
+    },
+  },
+};
+
+// Set button text
+msg.payload = {
+  type: "smartObject",
+  payload: {
+    smartObjectId: 103,
+    action: "setText",
+    buttonIndex: 1,
+    text: "Power",
+  },
+};
+
+// Enable/disable button
+msg.payload = {
+  type: "smartObject",
+  payload: {
+    smartObjectId: 103,
+    action: "setEnabled",
+    buttonIndex: 1,
+    enabled: true,
+  },
+};
+```
+
+#### 🔢 **Keypad**
+
+Numeric input controls with display feedback and key simulation.
+
+```javascript
+// Register a keypad
+msg.payload = {
+  type: "registerSmartObject",
+  payload: {
+    smartObjectId: 104,
+    profile: "keypad",
+    config: {
+      allowDecimal: true,
+      maxValue: 999,
+      minValue: 0,
+    },
+  },
+};
+
+// Send key press
+msg.payload = {
+  type: "smartObject",
+  payload: {
+    smartObjectId: 104,
+    action: "sendKey",
+    keyValue: "5",
+  },
+};
+
+// Set display text
+msg.payload = {
+  type: "smartObject",
+  payload: {
+    smartObjectId: 104,
+    action: "setDisplay",
+    displayText: "125",
+  },
+};
+
+// Enable/disable keypad
+msg.payload = {
+  type: "smartObject",
+  payload: {
+    smartObjectId: 104,
+    action: "setEnabled",
+    enabled: true,
+  },
+};
+```
+
+### Smart Object Events
+
+Smart Objects generate specialized events that provide context about user interactions:
+
+```javascript
+// Smart Object event output
+{
+  "topic": "smartObject",
+  "payload": {
+    "type": "smartObject",
+    "smartObjectId": 101,
+    "join": 1,
+    "data": {
+      "action": "itemSelected",
+      "itemIndex": 3,
+      "itemText": "Kitchen",
+      "currentPage": 1
+    },
+    "timestamp": "2025-08-16T10:30:00.000Z"
+  }
+}
+```
+
+### Advanced Smart Object Features
+
+#### State Tracking
+
+```javascript
+// Get current page of a page reference
+msg.payload = {
+  type: "getSmartObjectState",
+  payload: {
+    smartObjectId: 102,
+    property: "currentPage",
+  },
+};
+
+// Get all registered Smart Objects
+msg.payload = {
+  type: "getRegisteredSmartObjects",
+};
+```
+
+#### Batch Operations
+
+```javascript
+// Configure multiple items at once
+msg.payload = {
+  type: "smartObject",
+  payload: {
+    smartObjectId: 101,
+    action: "batchSetItems",
+    items: [
+      { index: 1, text: "Zone 1", enabled: true },
+      { index: 2, text: "Zone 2", enabled: true },
+      { index: 3, text: "Zone 3", enabled: false },
+    ],
+  },
+};
+```
+
 ## 📊 Node Outputs
 
 ### Output 1: Join Events
@@ -217,6 +468,21 @@ Real-time events from Crestron processor:
     type: "serial"
   }
 }
+
+// Smart Object interaction
+{
+  payload: {
+    join: 1,
+    data: {
+      smartObjectId: 101,
+      action: "itemSelected",
+      itemIndex: 3,
+      itemText: "Kitchen",
+      currentPage: 1
+    },
+    type: "smartObject"
+  }
+}
 ```
 
 ### Output 2: Connection Status
@@ -235,6 +501,108 @@ System events and connection status:
 
 // Server-specific: client connected
 { connected: true, clientConnected: true }
+```
+
+## 🎛️ Smart Object Configuration
+
+Smart Objects require specific configuration in both Node-RED and Crestron Studio for proper operation.
+
+### Crestron Studio Setup
+
+1. **Add Smart Object to Your Project:**
+
+   ```
+   - In Crestron Studio, add desired Smart Objects to your project
+   - Configure Smart Object IDs (typically 101-199)
+   - Program SIMPL logic to handle Smart Object events
+   ```
+
+2. **Smart Object ID Mapping:**
+   | Smart Object Type | Suggested ID Range | Purpose |
+   |-------------------|-------------------|----------------------------|
+   | Dynamic Lists | 101-110 | Room/Zone selection |
+   | Page References | 111-120 | Multi-page navigation |
+   | Button Lists | 121-130 | Function button arrays |
+   | Keypads | 131-140 | Numeric input controls |
+
+3. **SIMPL Programming Example:**
+   ```
+   // For Dynamic List Smart Object ID 101
+   Smart_Object_101.Item_Clicked -> [Your logic here]
+   Smart_Object_101.Current_Item_Text$ -> [Process selected item]
+   ```
+
+### Node-RED Configuration
+
+Smart Objects must be registered before use:
+
+```javascript
+// Register Smart Objects on connection
+msg.payload = [
+  {
+    type: "registerSmartObject",
+    payload: {
+      smartObjectId: 101,
+      profile: "dynamicList",
+      config: { maxItems: 20 },
+    },
+  },
+  {
+    type: "registerSmartObject",
+    payload: {
+      smartObjectId: 102,
+      profile: "pageReference",
+      config: { totalPages: 5 },
+    },
+  },
+];
+```
+
+### Configuration Profiles
+
+#### Dynamic List Profile
+
+```javascript
+{
+  maxItems: 50,           // Maximum number of items
+  allowMultipleSelection: false,  // Allow multi-select
+  enableScrolling: true,  // Enable scrolling
+  itemHeight: 30         // Item height in pixels
+}
+```
+
+#### Page Reference Profile
+
+```javascript
+{
+  totalPages: 10,        // Total number of pages
+  showNavButtons: true,  // Show navigation buttons
+  enableSwipeGestures: true,  // Enable swipe navigation
+  loopPages: false       // Loop from last to first page
+}
+```
+
+#### Button List Profile
+
+```javascript
+{
+  buttonCount: 12,       // Number of buttons
+  allowToggle: true,     // Allow toggle state
+  buttonStyle: "raised", // "raised" or "flat"
+  columns: 3            // Number of columns
+}
+```
+
+#### Keypad Profile
+
+```javascript
+{
+  allowDecimal: true,    // Allow decimal input
+  maxValue: 9999,       // Maximum value
+  minValue: 0,          // Minimum value
+  maxDigits: 4,         // Maximum digits
+  showDisplay: true     // Show numeric display
+}
 ```
 
 ## 🔧 Configuration Options
