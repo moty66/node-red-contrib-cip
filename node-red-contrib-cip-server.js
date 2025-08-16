@@ -77,8 +77,54 @@ module.exports = function (RED) {
             console.log('Unknown join type', msg.payload.payload);
           }
         }
+        // Smart Object digital commands with page calculation
+        else if ('smartObjectDigital' === msg.payload.type && msg.payload.payload) {
+          const { smartObjectId, join, data, page } = msg.payload.payload;
+
+          let actualJoin = join;
+
+          // If page is specified, calculate join using your Smart Object pattern:
+          // Digital joins = 4000 + (page-1) × 10 + 10 + join
+          if (page !== undefined) {
+            actualJoin = 4000 + (page - 1) * 10 + 10 + join;
+            node.log(`Smart Object ${smartObjectId}, Page ${page}, Join ${join} -> Actual Join ${actualJoin}`);
+          }
+
+          node.log(`Sending Smart Object Digital: SO=${smartObjectId}, Join=${actualJoin}, Data=${data}`);
+          cipServer.sendSmartObjectDigital(smartObjectId, actualJoin, data);
+        }
+        // Smart Object analog commands with page calculation  
+        else if ('smartObjectAnalog' === msg.payload.type && msg.payload.payload) {
+          const { smartObjectId, join, data, page } = msg.payload.payload;
+
+          let actualJoin = join;
+
+          // For analog joins, if page calculation is needed (adjust pattern as needed)
+          if (page !== undefined && join !== 1) {
+            // Assuming similar pattern for analog (you may need to adjust)
+            actualJoin = 5000 + (page - 1) * 10 + 10 + join;
+            node.log(`Smart Object ${smartObjectId} Analog, Page ${page}, Join ${join} -> Actual Join ${actualJoin}`);
+          }
+
+          cipServer.sendSmartObjectAnalog(smartObjectId, actualJoin, data);
+        }
+        // Smart Object serial commands with page calculation
+        else if ('smartObjectSerial' === msg.payload.type && msg.payload.payload) {
+          const { smartObjectId, join, data, page } = msg.payload.payload;
+
+          let actualJoin = join;
+
+          // For serial joins (adjust pattern as needed)
+          if (page !== undefined) {
+            actualJoin = 6000 + (page - 1) * 10 + 10 + join;
+            node.log(`Smart Object ${smartObjectId} Serial, Page ${page}, Join ${join} -> Actual Join ${actualJoin}`);
+          }
+
+          cipServer.sendSmartObjectSerial(smartObjectId, actualJoin, data);
+        }
         else {
           node.warn("Unknown or incomplete payload", msg.payload);
+          console.log("Payload details:", JSON.stringify(msg.payload, null, 2));
         }
       }
       else {

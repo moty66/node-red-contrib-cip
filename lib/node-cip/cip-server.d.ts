@@ -55,7 +55,9 @@ declare class CIPServer extends EventEmitter {
     dynamicListSetItemText(smartObjectId: number, itemIndex: number, text: string): boolean;
     dynamicListSetItemEnabled(smartObjectId: number, itemIndex: number, enabled: boolean): boolean;
     pageReferenceSelectPage(smartObjectId: number, pageNumber: number): boolean;
-    pageReferenceSetButtonEnabled(smartObjectId: number, buttonNumber: number, enabled: boolean): boolean;
+    pageReferenceSetButtonEnabled(smartObjectId: number, pageNumber: number, buttonNumber: number, enabled: boolean): boolean;
+    pageReferenceSetButtonFeedback(smartObjectId: number, pageNumber: number, buttonNumber: number, highlighted: boolean): boolean;
+    pageReferenceSetButtonHighlight(smartObjectId: number, pageNumber: number, buttonNumber: number, highlighted: boolean): boolean;
     buttonListSetText(smartObjectId: number, buttonIndex: number, text: string): boolean;
     buttonListSetEnabled(smartObjectId: number, buttonIndex: number, enabled: boolean): boolean;
     keypadSendKey(smartObjectId: number, keyValue: string): boolean;

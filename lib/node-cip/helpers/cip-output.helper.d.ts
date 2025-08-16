@@ -25,7 +25,9 @@ export declare class CIPOutputHelper {
     static dynamicListSetItemText(smartObjectId: number, itemIndex: number, text: string): Buffer;
     static dynamicListSetItemEnabled(smartObjectId: number, itemIndex: number, enabled: boolean): Buffer;
     static pageReferenceSelectPage(smartObjectId: number, pageNumber: number): Buffer;
-    static pageReferenceSetButtonEnabled(smartObjectId: number, buttonNumber: number, enabled: boolean): Buffer;
+    static pageReferenceSetButtonEnabled(smartObjectId: number, pageNumber: number, buttonNumber: number, enabled: boolean): Buffer;
+    static pageReferenceSetButtonFeedback(smartObjectId: number, pageNumber: number, buttonNumber: number, highlighted: boolean): Buffer;
+    static pageReferenceSetButtonHighlight(smartObjectId: number, pageNumber: number, buttonNumber: number, highlighted: boolean): Buffer;
     static buttonListSetText(smartObjectId: number, buttonIndex: number, text: string): Buffer;
     static buttonListSetEnabled(smartObjectId: number, buttonIndex: number, enabled: boolean): Buffer;
     static keypadSendKey(smartObjectId: number, keyValue: string): Buffer;

@@ -6,6 +6,7 @@ export interface CIPEventData {
     smartObjectType?: "button-list" | "page-reference" | "keypad" | "slider" | "dynamic-list" | "unknown";
     smartObjectSubType?: string;
     currentPage?: number;
+    pageNumber?: number;
     buttonNumber?: number;
     itemIndex?: number;
     keyValue?: string;
